@@ -1,0 +1,10 @@
+development:
+  db:
+    host: 
+    port: 
+    username: 
+    password: 
+    db_name: 
+  redis:
+    host: 
+    port: 
