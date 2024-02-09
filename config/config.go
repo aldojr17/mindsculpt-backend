@@ -1,7 +1,7 @@
 package config
 
 import (
-	"fmt"
+	log "mindsculpt/logger"
 	"sync"
 
 	"github.com/spf13/viper"
@@ -18,7 +18,7 @@ var (
 	mutex    sync.Mutex
 )
 
-func initEnvironment() {
+func initConfig() {
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".")
 	viper.SetConfigType("yaml")
@@ -26,16 +26,18 @@ func initEnvironment() {
 	viper.Set("env", "development")
 
 	if err := viper.ReadInConfig(); err != nil {
-		fmt.Printf("Failed read file config : %s", err.Error())
+		log.Errorf("failed read file config : %s", err.Error())
+		panic("Failed read file config")
 	}
 
 	if err := viper.UnmarshalKey(viper.GetString("env"), &instance); err != nil {
-		fmt.Printf("unable to decode into config struct, %v", err)
+		log.Errorf("unable to decode into config struct, %v", err)
+		panic("Unable to decode")
 	}
 }
 
 func GetConfig() *Config {
-	once.Do(initEnvironment)
+	once.Do(initConfig)
 	mutex.Lock()
 	defer mutex.Unlock()
 	return instance

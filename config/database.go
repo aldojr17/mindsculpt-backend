@@ -14,3 +14,7 @@ func (d *Database) Config() string {
 	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		d.Host, d.Port, d.Username, d.Password, d.DbName)
 }
+
+func (d *Database) ConfigInfo() string {
+	return fmt.Sprintf("%+v", d)
+}
