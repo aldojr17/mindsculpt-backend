@@ -8,6 +8,7 @@ development:
   redis:
     host:
     port:
+    ttl_model: # Minutes
   api:
     url:
     key:

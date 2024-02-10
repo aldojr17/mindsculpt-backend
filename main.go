@@ -2,7 +2,6 @@ package main
 
 import (
 	"mindsculpt/initialize"
-	log "mindsculpt/logger"
 	"mindsculpt/router"
 	"net/http"
 
@@ -11,7 +10,6 @@ import (
 
 func main() {
 	app := initialize.InitApp()
-	log.Infof("%+v", app)
 
 	r := gin.New()
 	r.GET("/ping", func(c *gin.Context) {
