@@ -3,6 +3,7 @@ package main
 import (
 	"mindsculpt/initialize"
 	log "mindsculpt/logger"
+	"mindsculpt/router"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,6 +19,8 @@ func main() {
 			"message": "pong",
 		})
 	})
+
+	router.Routes(r, app)
 
 	if err := r.Run(); err != nil {
 		panic(err)

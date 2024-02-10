@@ -10,6 +10,7 @@ import (
 type Config struct {
 	Database *Database `mapstructure:"db"`
 	Redis    *Redis    `mapstructure:"redis"`
+	API      *API      `mapstructure:"api"`
 }
 
 var (
