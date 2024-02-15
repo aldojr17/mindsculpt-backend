@@ -4,6 +4,7 @@ import (
 	"mindsculpt/config"
 	"mindsculpt/domain"
 	"mindsculpt/initialize"
+	"mindsculpt/repository"
 	"mindsculpt/repository/cache"
 	"mindsculpt/service"
 
@@ -16,7 +17,10 @@ type APIHandler struct {
 
 func NewAPIHandler(app *initialize.Application) *APIHandler {
 	return &APIHandler{
-		service: service.NewAPIService(cache.NewModelCache(app.Redis, config.GetConfig().Redis.GetTTLModel())),
+		service: service.NewAPIService(
+			cache.NewModelCache(app.Redis, config.GetConfig().Redis.GetTTLModel()),
+			repository.NewImageGenerationRepository(app.Database),
+		),
 	}
 }
 

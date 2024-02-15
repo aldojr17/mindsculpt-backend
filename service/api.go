@@ -9,7 +9,9 @@ import (
 	"mindsculpt/api"
 	"mindsculpt/config"
 	"mindsculpt/domain"
+	"mindsculpt/repository"
 	"mindsculpt/repository/cache"
+	"time"
 
 	firebase "firebase.google.com/go"
 	"github.com/google/uuid"
@@ -18,12 +20,17 @@ import (
 )
 
 type APIService struct {
-	modelCache *cache.ModelCache
+	modelCache          *cache.ModelCache
+	imageGenerationRepo *repository.ImageGenerationRepository
 }
 
-func NewAPIService(modelCache *cache.ModelCache) *APIService {
+func NewAPIService(
+	modelCache *cache.ModelCache,
+	imageGenerationRepo *repository.ImageGenerationRepository,
+) *APIService {
 	return &APIService{
-		modelCache: modelCache,
+		modelCache:          modelCache,
+		imageGenerationRepo: imageGenerationRepo,
 	}
 }
 
@@ -79,7 +86,7 @@ func (s *APIService) GenerateImage(payload domain.APIGenerateImageRequest) (*dom
 		return nil, err
 	}
 
-	objKey := fmt.Sprintf("%s.%s", uuid.New().String(), api.IMAGE_EXTENSION)
+	objKey := fmt.Sprintf("%s.%s", response.UUID, api.IMAGE_EXTENSION)
 
 	objectHandle := bucketHandle.Object(objKey)
 
@@ -95,6 +102,18 @@ func (s *APIService) GenerateImage(payload domain.APIGenerateImageRequest) (*dom
 	}
 
 	response.ImageUrl = fmt.Sprintf(api.FIREBASE_IMAGE_URL, config.GetConfig().BucketName, objKey, token)
+
+	imageGeneration := domain.ImageGeneration{
+		ID:         response.UUID,
+		Url:        response.ImageUrl,
+		Censored:   response.Censored,
+		CreateTime: time.Now().Unix(),
+	}
+
+	err = s.imageGenerationRepo.Create(imageGeneration)
+	if err != nil {
+		return nil, err
+	}
 
 	return response, nil
 }
