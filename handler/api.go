@@ -2,6 +2,7 @@ package handler
 
 import (
 	"mindsculpt/config"
+	"mindsculpt/domain"
 	"mindsculpt/initialize"
 	"mindsculpt/repository/cache"
 	"mindsculpt/service"
@@ -27,4 +28,21 @@ func (h *APIHandler) GetGenerationModels(c *gin.Context) {
 	}
 
 	SuccessResponse(c, data, "Successfully get models")
+}
+
+func (h *APIHandler) GenerateImage(c *gin.Context) {
+	var payload domain.APIGenerateImageRequest
+
+	if err := c.ShouldBindJSON(&payload); err != nil {
+		BadResponseError(c, err)
+		return
+	}
+
+	data, err := h.service.GenerateImage(payload)
+	if err != nil {
+		InternalServerError(c, err)
+		return
+	}
+
+	SuccessResponse(c, data, "Successfully generate image")
 }

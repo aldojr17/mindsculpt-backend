@@ -13,3 +13,5 @@ development:
     url:
     key:
     secret:
+  secret_key: # JSON file
+  bucket_name:
