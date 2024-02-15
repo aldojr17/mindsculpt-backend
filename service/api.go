@@ -33,3 +33,12 @@ func (s *APIService) GetGenerationModels() (*domain.APIGetModelsResponse, error)
 
 	return resp, nil
 }
+
+func (s *APIService) GenerateImage(payload domain.APIGenerateImageRequest) (*domain.APIGenerateImageResponse, error) {
+	resp, err := api.GenerateImage(payload)
+	if err != nil {
+		return nil, err
+	}
+
+	return resp, nil
+}
