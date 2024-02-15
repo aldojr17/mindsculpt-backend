@@ -8,9 +8,11 @@ import (
 )
 
 type Config struct {
-	Database *Database `mapstructure:"db"`
-	Redis    *Redis    `mapstructure:"redis"`
-	API      *API      `mapstructure:"api"`
+	Database   *Database `mapstructure:"db"`
+	Redis      *Redis    `mapstructure:"redis"`
+	API        *API      `mapstructure:"api"`
+	SecretKey  string    `mapstructure:"secret_key"`
+	BucketName string    `mapstructure:"bucket_name"`
 }
 
 var (

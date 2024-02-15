@@ -21,6 +21,6 @@ type APIGenerateImageRawResponse struct {
 type APIGenerateImageResponse struct {
 	UUID     string `json:"uuid"`
 	Status   string `json:"status"`
-	Image    string `json:"image"`
+	ImageUrl string `json:"image_url"`
 	Censored bool   `json:"censored"`
 }
