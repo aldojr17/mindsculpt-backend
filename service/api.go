@@ -117,3 +117,12 @@ func (s *APIService) GenerateImage(payload domain.APIGenerateImageRequest) (*dom
 
 	return response, nil
 }
+
+func (s *APIService) GetImageGeneration(uuid string) (*domain.ImageGeneration, error) {
+	resp, err := s.imageGenerationRepo.GetByUUID(uuid)
+	if err != nil {
+		return nil, err
+	}
+
+	return resp, nil
+}

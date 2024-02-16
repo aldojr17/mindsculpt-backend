@@ -50,3 +50,15 @@ func (h *APIHandler) GenerateImage(c *gin.Context) {
 
 	SuccessResponse(c, data, "Successfully generate image")
 }
+
+func (h *APIHandler) GetImageGeneration(c *gin.Context) {
+	uuid := c.Param("id")
+
+	data, err := h.service.GetImageGeneration(uuid)
+	if err != nil {
+		InternalServerError(c, err)
+		return
+	}
+
+	SuccessResponse(c, data, "Successfully get data")
+}

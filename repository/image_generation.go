@@ -19,3 +19,12 @@ func NewImageGenerationRepository(db *gorm.DB) *ImageGenerationRepository {
 func (r *ImageGenerationRepository) Create(payload domain.ImageGeneration) error {
 	return r.db.Create(&payload).Error
 }
+
+func (r *ImageGenerationRepository) GetByUUID(uuid string) (*domain.ImageGeneration, error) {
+	data := new(domain.ImageGeneration)
+	if err := r.db.Where("id", uuid).First(&data).Error; err != nil {
+		return nil, err
+	}
+
+	return data, nil
+}
