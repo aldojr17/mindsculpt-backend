@@ -4,6 +4,7 @@ import (
 	"mindsculpt/config"
 	"mindsculpt/domain"
 	"mindsculpt/initialize"
+	"mindsculpt/repository"
 	"mindsculpt/repository/cache"
 	"mindsculpt/service"
 
@@ -16,7 +17,10 @@ type APIHandler struct {
 
 func NewAPIHandler(app *initialize.Application) *APIHandler {
 	return &APIHandler{
-		service: service.NewAPIService(cache.NewModelCache(app.Redis, config.GetConfig().Redis.GetTTLModel())),
+		service: service.NewAPIService(
+			cache.NewModelCache(app.Redis, config.GetConfig().Redis.GetTTLModel()),
+			repository.NewImageGenerationRepository(app.Database),
+		),
 	}
 }
 
@@ -45,4 +49,16 @@ func (h *APIHandler) GenerateImage(c *gin.Context) {
 	}
 
 	SuccessResponse(c, data, "Successfully generate image")
+}
+
+func (h *APIHandler) GetImageGeneration(c *gin.Context) {
+	uuid := c.Param("id")
+
+	data, err := h.service.GetImageGeneration(uuid)
+	if err != nil {
+		InternalServerError(c, err)
+		return
+	}
+
+	SuccessResponse(c, data, "Successfully get data")
 }
