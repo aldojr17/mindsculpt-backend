@@ -8,10 +8,18 @@ type APIGetModelsResponse struct {
 }
 
 type APIGenerateImageRequest struct {
-	UUID string `json:"uuid" binding:"required"`
+	Width                int    `json:"width" binding:"required"`
+	Height               int    `json:"height" binding:"required"`
+	NegativePromptUnclip string `json:"negative_prompt_unclip" binding:"required"`
+	Query                string `json:"query" binding:"required"`
 }
 
 type APIGenerateImageRawResponse struct {
+	UUID   string `json:"uuid"`
+	Status string `json:"status"`
+}
+
+type APIGetGenerationRawResponse struct {
 	UUID     string   `json:"uuid"`
 	Status   string   `json:"status"`
 	Images   []string `json:"images"`

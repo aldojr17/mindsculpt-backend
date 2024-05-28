@@ -6,8 +6,9 @@ const (
 )
 
 const (
-	PATH_GET_MODELS     = "/key/api/v1/models"
-	PATH_GET_GENERATION = "/key/api/v1/text2image/status/%s"
+	PATH_GET_MODELS        = "/key/api/v1/models"
+	PATH_GET_GENERATION    = "/key/api/v1/text2image/status/%s"
+	PATH_CREATE_GENERATION = "/key/api/v1/text2image/run"
 )
 
 const (
