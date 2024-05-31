@@ -1,8 +1,6 @@
 package domain
 
 import (
-	log "mindsculpt/logger"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -44,8 +42,6 @@ func (v *APIGenerateImageRequest) Validate(c *gin.Context) error {
 	if err := c.ShouldBindJSON(v); err != nil {
 		return err
 	}
-
-	log.Infof("%+v", v)
 
 	if v.Width == 0 {
 		v.Width = 1024
