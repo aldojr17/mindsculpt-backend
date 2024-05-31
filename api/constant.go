@@ -18,3 +18,14 @@ const (
 	STATUS_DONE             = "DONE"
 	TIMEOUT                 = 3 // Seconds
 )
+
+const GENERATE_PARAMS = `{
+	"type": "GENERATE",
+	"width": %d,
+	"height": %d,
+	"num_images": 1,
+	"negativePromptUnclip": "%s",
+	"generateParams": {
+		"query": "%s"
+	}
+}`
