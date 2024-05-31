@@ -1,5 +1,11 @@
 package domain
 
+import (
+	log "mindsculpt/logger"
+
+	"github.com/gin-gonic/gin"
+)
+
 type APIGetModelsResponse struct {
 	ID      int     `json:"id"`
 	Name    string  `json:"name"`
@@ -8,10 +14,11 @@ type APIGetModelsResponse struct {
 }
 
 type APIGenerateImageRequest struct {
-	Width                int    `json:"width" binding:"required"`
-	Height               int    `json:"height" binding:"required"`
-	NegativePromptUnclip string `json:"negative_prompt_unclip" binding:"required"`
+	Width                int    `json:"width"`
+	Height               int    `json:"height"`
+	NegativePromptUnclip string `json:"negative_prompt_unclip"`
 	Query                string `json:"query" binding:"required"`
+	ModelID              int    `json:"model_id"`
 }
 
 type APIGenerateImageRawResponse struct {
@@ -31,4 +38,26 @@ type APIGenerateImageResponse struct {
 	Status   string `json:"status"`
 	ImageUrl string `json:"image_url"`
 	Censored bool   `json:"censored"`
+}
+
+func (v *APIGenerateImageRequest) Validate(c *gin.Context) error {
+	if err := c.ShouldBindJSON(v); err != nil {
+		return err
+	}
+
+	log.Infof("%+v", v)
+
+	if v.Width == 0 {
+		v.Width = 1024
+	}
+
+	if v.Height == 0 {
+		v.Height = 1024
+	}
+
+	if v.ModelID == 0 {
+		v.ModelID = 4
+	}
+
+	return nil
 }

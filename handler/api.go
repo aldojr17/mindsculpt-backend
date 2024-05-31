@@ -37,7 +37,7 @@ func (h *APIHandler) GetGenerationModels(c *gin.Context) {
 func (h *APIHandler) GenerateImage(c *gin.Context) {
 	var payload domain.APIGenerateImageRequest
 
-	if err := c.ShouldBindJSON(&payload); err != nil {
+	if err := payload.Validate(c); err != nil {
 		BadResponseError(c, err)
 		return
 	}
