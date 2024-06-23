@@ -89,7 +89,7 @@ func GetGeneration(payload domain.APIGenerateImageRawResponse) (*domain.APIGetGe
 			return nil, err
 		}
 
-		if raw.Status == STATUS_DONE {
+		if raw.Status == IMAGE_STATUS_DONE {
 			return raw, nil
 		}
 

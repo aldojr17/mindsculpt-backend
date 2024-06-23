@@ -27,28 +27,28 @@ func NewAPIHandler(app *initialize.Application) *APIHandler {
 func (h *APIHandler) GetGenerationModels(c *gin.Context) {
 	data, err := h.service.GetGenerationModels()
 	if err != nil {
-		InternalServerError(c, err)
+		ResponseInternalServerError(c, err)
 		return
 	}
 
-	SuccessResponse(c, data, "Successfully get models")
+	ResponseOK(c, data, "Successfully get models")
 }
 
 func (h *APIHandler) GenerateImage(c *gin.Context) {
 	var payload domain.APIGenerateImageRequest
 
 	if err := payload.Validate(c); err != nil {
-		BadResponseError(c, err)
+		ResponseBadRequest(c, err)
 		return
 	}
 
 	data, err := h.service.GenerateImage(payload)
 	if err != nil {
-		InternalServerError(c, err)
+		ResponseInternalServerError(c, err)
 		return
 	}
 
-	SuccessResponse(c, data, "Successfully generate image")
+	ResponseOK(c, data, "Successfully generate image")
 }
 
 func (h *APIHandler) GetImageGeneration(c *gin.Context) {
@@ -56,9 +56,9 @@ func (h *APIHandler) GetImageGeneration(c *gin.Context) {
 
 	data, err := h.service.GetImageGeneration(uuid)
 	if err != nil {
-		InternalServerError(c, err)
+		ResponseInternalServerError(c, err)
 		return
 	}
 
-	SuccessResponse(c, data, "Successfully get data")
+	ResponseOK(c, data, "Successfully get data")
 }
