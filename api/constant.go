@@ -12,10 +12,26 @@ const (
 )
 
 const (
+	MODEL_STATUS_ACTIVE            = "ACTIVE"
+	MODEL_STATUS_DISABLED_BY_QUEUE = "DISABLED_BY_QUEUE"
+)
+
+const (
+	IMAGE_STATUS_INITIAL    = "INITIAL"
+	IMAGE_STATUS_PROCESSING = "PROCESSING"
+	IMAGE_STATUS_DONE       = "DONE"
+	IMAGE_STATUS_FAIL       = "FAIL"
+)
+
+// 1:1 / 2:3 / 3:2 / 9:16 / 16:9
+// You and your users can make requests in Russian, English or any other
+// language. It is also allowed to use emoji in the text description.
+// The maximum size of a text description is 1000 characters.
+
+const (
 	IMAGE_EXTENSION         = "jpg"
 	FIREBASE_TOKEN_METADATA = "firebaseStorageDownloadTokens"
 	FIREBASE_IMAGE_URL      = "https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media&token=%s"
-	STATUS_DONE             = "DONE"
 	TIMEOUT                 = 3 // Seconds
 )
 
