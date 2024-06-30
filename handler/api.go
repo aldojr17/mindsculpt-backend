@@ -48,7 +48,7 @@ func (h *APIHandler) GenerateImage(c *gin.Context) {
 		return
 	}
 
-	ResponseOK(c, data, "Successfully generate image")
+	ResponseCreated(c, data, "Successfully generate image")
 }
 
 func (h *APIHandler) GetImageGeneration(c *gin.Context) {

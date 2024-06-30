@@ -25,6 +25,10 @@ func ResponseOK(c *gin.Context, data interface{}, message string) {
 	sendResponse(c, true, data, message, http.StatusOK)
 }
 
+func ResponseCreated(c *gin.Context, data interface{}, message string) {
+	sendResponse(c, true, data, message, http.StatusCreated)
+}
+
 func ResponseBadRequest(c *gin.Context, err error) {
 	sendResponse(c, false, nil, err.Error(), http.StatusBadRequest)
 }
