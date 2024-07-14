@@ -1,6 +1,8 @@
 package domain
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -41,6 +43,10 @@ type APIGenerateImageResponse struct {
 func (v *APIGenerateImageRequest) Validate(c *gin.Context) error {
 	if err := c.ShouldBindJSON(v); err != nil {
 		return err
+	}
+
+	if len(v.Query) > 1000 {
+		return fmt.Errorf("invalid length (maximum 1000)")
 	}
 
 	if v.Width == 0 {
