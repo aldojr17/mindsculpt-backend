@@ -46,7 +46,15 @@ func (v *APIGenerateImageRequest) Validate(c *gin.Context) error {
 	}
 
 	if len(v.Query) > 1000 {
-		return fmt.Errorf("invalid length (maximum 1000)")
+		return fmt.Errorf("invalid query length (maximum 1000)")
+	}
+
+	if v.Width < 0 {
+		return fmt.Errorf("invalid width")
+	}
+
+	if v.Height < 0 {
+		return fmt.Errorf("invalid height")
 	}
 
 	if v.Width == 0 {
